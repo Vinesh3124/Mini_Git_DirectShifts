@@ -1,44 +1,65 @@
 import React, { useEffect } from "react";
 import PullListView from "../PullListView/PullListView";
-import Header from "../HeaderBar/Header";
-import { connect } from 'react-redux';
-import { getAllPullRequest } from '../../store/Actions/dashboardAction';
+import IssueListView from "../IssueListView/IssueListView";
+import { connect } from "react-redux";
+import {getAllPullRequest, getAllIssuesRequest} from "../../store/Actions/dashboardAction";
+import { useHistory } from 'react-router-dom';
 import "./Dashboard.scss";
+import Loader from "../Common/Loader/Loader";
 
-const Dashboard = ({isLoading, getAllPullRequest, PullRequestdata}) => {
+const Dashboard = ({
+  isLoading,
+  getAllPullRequest,
+  PullRequestdata,
+  getAllIssuesRequest,
+  allIssuesRequestdata
+}) => {
 
-    useEffect(() => {
-        let payload = {
-            state: 'all',
-            perPage: 5,
-            page: 1,
-            sort: 'updated'
-        }
-        // getAllPullRequest(payload);
-    }, [])
+  const history = useHistory();
 
-    console.log(PullRequestdata, 'PullRequestdata')
-    
+  const handleClick = () => {
+    history.push(`/list-pull-request`);
+  };
+
+  useEffect(() => {
+    let pullPayload = {
+      state: "all",
+      perPage: 5,
+      page: 1,
+      sort: "updated",
+    };
+    let issuesPayload = {
+      state: "all",
+      filter: "all",
+      label: "",
+      perPage: 5,
+      page: 1,
+    };
+    getAllPullRequest(pullPayload);
+    // getAllIssuesRequest(issuesPayload);
+  }, []);
+
   return (
     <div>
-      <div>
-        <Header />
-      </div>
       <div className="summary-container">
-        <div className="summary-container-pull">
+        <div className="summary-container-pull" onClick={() => handleClick()}>
           <PullListView PullRequestdata={PullRequestdata} />
         </div>
-        <div className="summary-container-issues"></div>
+        <div className="summary-container-issues">
+          <IssueListView allIssuesRequestdata={allIssuesRequestdata} />
+        </div>
       </div>
+      <Loader isLoading={isLoading} />
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-    loading: state.dashboardReducer.isLoading || false,
-    PullRequestdata: state.dashboardReducer.allPullRequest || []
+  isLoading: state.dashboardReducer.isLoading || false,
+  PullRequestdata: state.dashboardReducer.allPullRequest || [],
+  allIssuesRequestdata: state.dashboardReducer.allIssuesRequest || [],
 });
-  
-const mapDispatchToProps = {getAllPullRequest};
+
+const mapDispatchToProps = { getAllPullRequest, getAllIssuesRequest };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

@@ -1,10 +1,17 @@
 import React from 'react';
+import '../PullListView/PullListView.scss'
+import InfoCard from '../Common/InfoCard/InfoCard';
 
-const IssueListView = () => {
+const IssueListView = ({allIssuesRequestdata}) => {
     return(
-        <div>
-            <div>Hello World 2</div>
+        <div className="parent-pull-container">
+        <div className="header-style">
+          <p>Issues</p>
         </div>
+        {allIssuesRequestdata?.length ? allIssuesRequestdata?.map((el) => (
+            <InfoCard key={el.id} {...el} isDetailCard={false} />
+        )) : <div>No data</div>}
+      </div>
     )
 }
 

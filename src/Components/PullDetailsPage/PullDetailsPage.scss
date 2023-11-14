@@ -1,0 +1,37 @@
+.list-view-container{
+    width: 100%;
+    height: auto;
+
+    .list-view-table{
+        width: 90%;
+        height: 75vh;
+        border: 1px solid;
+        margin: auto;
+        margin-top: 15px;
+
+        .filter-nav-conaatiner{
+            width: auto;
+            height: 6vh;
+            display: flex;
+            margin-top: 15px;
+            >div{
+                margin-right: 10px;
+            }
+        }
+
+        .table-data-container{
+            width: 100%;
+            height: 66vh;
+            overflow: auto;
+        }
+    }
+
+    .pagination-container{
+        width: 90%;
+        height: auto;
+        margin: auto;
+        margin-top: 20px;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
