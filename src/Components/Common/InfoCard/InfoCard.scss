@@ -1,0 +1,38 @@
+.content-card-container {
+    width: 100%;
+    min-height: 60px;
+    border-bottom: 1px solid #C1C1C1;
+    margin: auto;
+
+    .details-body {
+        font-size: 14px;
+        width: 95%;
+        margin: auto;
+    }
+
+    .card-header,
+    .card-info {
+        max-width: 95%;
+        height: 20px;
+        margin: auto;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        cursor: pointer;
+    }
+
+    .card-info {
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+}
+
+.content-card-container:last-child{
+    border: none;
+}

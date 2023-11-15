@@ -1,37 +1,22 @@
 import React from "react";
 import "./PullListView.scss";
+import InfoCard from "../Common/InfoCard/InfoCard";
+import { Button } from "@mui/material";
 
-const PullListView = ({ PullRequestdata }) => {
+const PullListView = ({ PullRequestdata, viewAll }) => {
+
   return (
     <div className="parent-pull-container">
       <div className="header-style">
         <p>Pull Request</p>
+        <div className="view-all-btn">
+          <Button onClick={() => viewAll()} variant="contained">View All</Button>
+        </div>
       </div>
       {PullRequestdata?.length ? PullRequestdata?.map((el) => (
-        <div key={el.id} className="content-card-container">
-          <div className="card-header">{el?.title || el?.body || ''}</div>
-          <div className="card-info">
-            <div>{`#${el.number} by ${el?.user?.login} on ${el?.created_at}`}</div>
-          </div>
-        </div>
-      )) : <div>No data</div>}
+        <InfoCard key={el.id} {...el} isDetailCard={false} />
+      )) : <div className="no-data-style">No Pull Request Data Available.</div>}
     </div>
-
-    // <div>
-    //     {
-    //         PullRequestdata.map((el) => (
-    //             <div key={el.id}>
-    //                 <p>{el?.url}</p>
-    //                 <p>{el?.state}</p>
-    //                 <p>{el?.title}</p>
-    //                 <p>{el?.user?.login}</p>
-    //                 {/* will show this in details */}
-    //                 <p>{el?.body}</p>
-
-    //             </div>
-    //         ))
-    //     }
-    // </div>
   );
 };
 
