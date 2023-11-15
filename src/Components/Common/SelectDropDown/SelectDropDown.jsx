@@ -4,20 +4,17 @@ import { FormControl, MenuItem, Select, styled, InputLabel } from '@mui/material
 const StyledSelect = styled(Select)({
     padding: '0px',
     borderRadius: '8px',
-    height: '30px',
-    minWidth: '100px',
+    height: '40px',
+    width: '300px',
 });
 
 const CustomInputLabel = styled(InputLabel)({
     color: 'black',  // Change this to your desired label color
 });
 
-const SelectDropDown = ({ filterOptions, onSelect, label }) => {
-    const [selectedOption, setSelectedOption] = useState(filterOptions[0].value);
-
-
+const SelectDropDown = ({ filterOptions, onSelect, label, value }) => {
+    
     const handleChange = (event) => {
-        setSelectedOption(event.target.value);
         onSelect(event.target.value)
     };
 
@@ -29,7 +26,7 @@ const SelectDropDown = ({ filterOptions, onSelect, label }) => {
             <StyledSelect
                 labelId="select-label"
                 id="select"
-                value={selectedOption}
+                value={value}
                 label={label}
                 onChange={handleChange}
             >

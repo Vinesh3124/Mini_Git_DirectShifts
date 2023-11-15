@@ -5,6 +5,9 @@ import {
     GET_ALL_ISSUES_REQUEST,
     GET_ALL_ISSUES_SUCCESS,
     GET_ALL_ISSUES_FAILURE,
+    GET_PULL_COMMENTS_REQUEST, 
+    GET_PULL_COMMENTS_SUCCESS, 
+    GET_PULL_COMMENTS_FAILURE
 } from "../Constant/dashboardConstant";
 
 const initialState = {
@@ -13,7 +16,9 @@ const initialState = {
     errMsg: "",
     allPullRequest: [],
     allIssuesRequest: [],
-    maxPullPage: 0
+    maxPullPage: 0,
+    maxIssuesPage: 0,
+    pullComments: []
 };
 
 const getLastPageNum = (paginationHeader, lastPage) => {
@@ -48,6 +53,7 @@ const dashboardReducer = (state = initialState, action) => {
                 isLoading: true,
                 hasError: false,
                 errMsg: "",
+                allPullRequest: []
             };
         case GET_ALL_PULL_SUCCESS:
             return {
@@ -69,12 +75,14 @@ const dashboardReducer = (state = initialState, action) => {
                 isLoading: true,
                 hasError: false,
                 errMsg: "",
+                allIssuesRequest: []
             };
         case GET_ALL_ISSUES_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                allIssuesRequest: action.payload,
+                allIssuesRequest: action.payload.data,
+                maxIssuesPage: getLastPageNum(action?.payload?.headers?.link || '', state.maxIssuesPage) || 0
             };
         case GET_ALL_ISSUES_FAILURE:
             return {
@@ -83,6 +91,27 @@ const dashboardReducer = (state = initialState, action) => {
                 hasError: true,
                 errMsg: "Something went wrong",
             };
+            case GET_PULL_COMMENTS_REQUEST:
+                return {
+                    ...state,
+                    isLoading: true,
+                    hasError: false,
+                    errMsg: "",
+                    pullComments: []
+                };
+            case GET_PULL_COMMENTS_SUCCESS:
+                return {
+                    ...state,
+                    isLoading: false,
+                    pullComments: action.payload.slice(0, 5),
+                };
+            case GET_PULL_COMMENTS_FAILURE:
+                return {
+                    ...state,
+                    isLoading: true,
+                    hasError: true,
+                    errMsg: "Something went wrong",
+                };
         default:
             return state;
     }

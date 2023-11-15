@@ -2,23 +2,17 @@ import React, { useEffect } from "react";
 import PullListView from "../PullListView/PullListView";
 import IssueListView from "../IssueListView/IssueListView";
 import { connect } from "react-redux";
-import {getAllPullRequest, getAllIssuesRequest} from "../../store/Actions/dashboardAction";
+import { getAllPullRequest, getAllIssuesRequest } from "../../store/Actions/dashboardAction";
 import { useHistory } from 'react-router-dom';
 import "./Dashboard.scss";
 import Loader from "../Common/Loader/Loader";
 
-const Dashboard = ({
-  isLoading,
-  getAllPullRequest,
-  PullRequestdata,
-  getAllIssuesRequest,
-  allIssuesRequestdata
-}) => {
+const Dashboard = ({ isLoading, getAllPullRequest, PullRequestdata, getAllIssuesRequest, allIssuesRequestdata }) => {
 
   const history = useHistory();
 
-  const handleClick = () => {
-    history.push(`/list-pull-request`);
+  const handleClick = (route) => {
+    history.push(route);
   };
 
   useEffect(() => {
@@ -36,17 +30,17 @@ const Dashboard = ({
       page: 1,
     };
     getAllPullRequest(pullPayload);
-    // getAllIssuesRequest(issuesPayload);
+    getAllIssuesRequest(issuesPayload);
   }, []);
 
   return (
     <div>
       <div className="summary-container">
-        <div className="summary-container-pull" onClick={() => handleClick()}>
-          <PullListView PullRequestdata={PullRequestdata} />
+        <div className="summary-container-pull">
+          <PullListView PullRequestdata={PullRequestdata} viewAll={() => handleClick('/list-pull-request')}/>
         </div>
         <div className="summary-container-issues">
-          <IssueListView allIssuesRequestdata={allIssuesRequestdata} />
+          <IssueListView allIssuesRequestdata={allIssuesRequestdata}  viewAll={() => handleClick('/list-issues')}/>
         </div>
       </div>
       <Loader isLoading={isLoading} />

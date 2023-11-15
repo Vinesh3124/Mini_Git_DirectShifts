@@ -5,9 +5,13 @@
     display: flex;
     justify-content: space-around;
 
+
     .summary-container-pull, .summary-container-issues{
         width: 45%;
-        height: 60vh;
-        border: 1px solid;
+        height: 70vh;
+        border: 1px solid #C1C1C1;
+        overflow: auto;
+        margin-top: 20px;
+        border-radius: 8px;
     }
 }
