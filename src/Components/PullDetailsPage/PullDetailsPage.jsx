@@ -5,6 +5,7 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import { connect } from "react-redux";
+import { mapOwnerObj, pullStateFilter, pullSortFilter, issuesLabelFilter } from '../../store/Constant/dashboardConstant'
 import { getAllPullRequest, getAllIssuesRequest, getPullCommentsRequest } from "../../store/Actions/dashboardAction";
 import InfoCard from "../Common/InfoCard/InfoCard";
 import Loader from "../Common/Loader/Loader";
@@ -16,13 +17,8 @@ import { FormatTimeDateFn } from "../../store/Constant/dashboardConstant";
 import FilterListIcon from '@mui/icons-material/FilterList';
 import "./PullDetailsPage.scss";
 
-
-const pullStateFilter = [{ label: 'All', value: 'all' }, { label: 'Closed', value: 'closed' }, { label: 'Open', value: 'open' }];
-const pullSortFilter = [{ label: 'Updated', value: 'updated' }, { label: 'Created', value: 'created' }, { label: 'Popularity', value: 'popularity' }, { label: 'Long Running', value: 'long-running' }];
-const issuesLabelFilter = [{ label: 'Bug', value: 'bug' }, { label: 'Documentation', value: 'documentation' }, { label: 'Duplicate', value: 'duplicate' }, { label: 'Enhancement', value: 'enhancement' }, { label: 'Help Wanted', value: 'help wanted' }, { label: 'Invalid', value: 'invalid' }, { label: 'Question', value: 'question' }, { label: 'wontfix', value: 'Will not fix' }]
-
 const PullDetailsPage = (props) => {
-    const { isLoading, getAllPullRequest, getAllIssuesRequest, allIssuesRequestdata, PullRequestdata, maxPullPage, maxIssuesPage, getPullCommentsRequest, pullCommentsData } = props
+    const { isLoading, getAllPullRequest, getAllIssuesRequest, allIssuesRequestdata, PullRequestdata, maxPullPage, maxIssuesPage, getPullCommentsRequest, pullCommentsData, repoNameData } = props
     const [page, setPage] = useState(1)
     const [selectedState, setSelectedState] = useState(pullStateFilter[0]?.value || '')
     const [selectedSortType, setSelectedSortType] = useState(pullSortFilter[0]?.value || '')
@@ -47,6 +43,8 @@ const PullDetailsPage = (props) => {
             perPage: 10,
             page: page,
             sort: selectedSortType || "updated",
+            owner: mapOwnerObj[repoNameData],
+            repo: repoNameData
         };
         getAllPullRequest(pullPayload);
     }
@@ -58,6 +56,8 @@ const PullDetailsPage = (props) => {
             label: selectedLabels.map((el) => el.value).join(',') || "",
             perPage: 10,
             page: page,
+            owner: mapOwnerObj[repoNameData],
+            repo: repoNameData
         };
         getAllIssuesRequest(issuesPayload);
     }
@@ -77,6 +77,7 @@ const PullDetailsPage = (props) => {
         } else {
             getIssuesRequestData()
         }
+        setOpenRightDrawer(false);
     }
 
     const handleChange = (event, value) => {
@@ -135,6 +136,7 @@ const PullDetailsPage = (props) => {
                     }}
                     key={el.id} {...el}
                     isDetailCard={false}
+                    showExtIcon={true}
                 />
             )) : <div className="no_data_style">No Data Available</div>
         )
@@ -229,7 +231,8 @@ const mapStateToProps = (state) => ({
     allIssuesRequestdata: state.dashboardReducer.allIssuesRequest || [],
     maxPullPage: state.dashboardReducer.maxPullPage,
     maxIssuesPage: state.dashboardReducer.maxIssuesPage,
-    pullCommentsData: state.dashboardReducer.pullComments || []
+    pullCommentsData: state.dashboardReducer.pullComments || [],
+    repoNameData: state.dashboardReducer.repoName || []
 });
 
 const mapDispatchToProps = { getAllPullRequest, getAllIssuesRequest, getPullCommentsRequest };
