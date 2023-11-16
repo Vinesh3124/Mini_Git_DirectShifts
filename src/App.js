@@ -8,12 +8,16 @@ import "./App.css";
 function App() {
   return (
     <div>
-      <Header />
-      <Switch>
-        <Route path="/" exact component={Dashboard} />
-        <Route path="/list-pull-request" exact component={PullDetailsPage} />
-        <Route path="/list-issues" exact component={PullDetailsPage} />
-      </Switch>
+      <div className="header-parent-container">
+        <Header />
+      </div>
+      <div>
+        <Switch>
+          <Route path="/" exact component={Dashboard} />
+          <Route path="/list-pull-request" exact component={PullDetailsPage} />
+          <Route path="/list-issues" exact component={PullDetailsPage} />
+        </Switch>
+      </div>
     </div>
   );
 }

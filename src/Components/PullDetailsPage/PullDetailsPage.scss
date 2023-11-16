@@ -49,7 +49,7 @@
     }
 
     .pagination-container{
-        width: 90%;
+        width: 95%;
         height: auto;
         margin: auto;
         margin-top: 20px;
@@ -68,11 +68,19 @@
 
 .filter-txt-style{
     padding: 20px 10px;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .drawer-items{
     padding: 20px 0px;
     margin-left: 20px;
+}
+
+@media only screen and (max-width: 500px) {
+    .drawer-items {
+        margin-left: 10px;
+    }
 }
 
 .modal-body{
@@ -185,4 +193,19 @@
     align-items: center;
     font-size: 16px;
     font-weight: bold;
+}
+
+.side-bar-container{
+    width: 320px;
+    height: 95vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .side-bar-btn-container{
+        width: 95%;
+        display: flex;
+        justify-content: space-between;
+        margin-left: 8px;
+    }
 }

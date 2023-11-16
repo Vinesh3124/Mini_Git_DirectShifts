@@ -15,3 +15,17 @@
         border-radius: 8px;
     }
 }
+
+@media only screen and (max-width: 500px) {
+    .summary-container{
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+
+        .summary-container-pull, .summary-container-issues{
+            width: 95%;
+            margin: auto;
+            margin-top: 20px;
+        }
+    }
+}

@@ -4,8 +4,8 @@ import IssueListView from "../IssueListView/IssueListView";
 import { connect } from "react-redux";
 import { getAllPullRequest, getAllIssuesRequest } from "../../store/Actions/dashboardAction";
 import { useHistory } from 'react-router-dom';
-import "./Dashboard.scss";
 import Loader from "../Common/Loader/Loader";
+import "./Dashboard.scss";
 
 const Dashboard = ({ isLoading, getAllPullRequest, PullRequestdata, getAllIssuesRequest, allIssuesRequestdata }) => {
 
@@ -31,6 +31,7 @@ const Dashboard = ({ isLoading, getAllPullRequest, PullRequestdata, getAllIssues
     };
     getAllPullRequest(pullPayload);
     getAllIssuesRequest(issuesPayload);
+    // eslint-disable-next-line
   }, []);
 
   return (

@@ -17,7 +17,6 @@ const MultiSelectDropDown = ({filterOptions, onSelect, value}) => {
       getOptionLabel={(option) => option.label}
       onChange={handleChange}
       value={value}
-    //   defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}
       renderInput={(params) => (
         <TextField {...params} label="Filter by labels" placeholder="Label(s)" />
       )}
