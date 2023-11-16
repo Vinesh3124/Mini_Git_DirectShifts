@@ -1,6 +1,6 @@
 import { put, call, takeLatest } from 'redux-saga/effects';
-import {GET_ALL_PULL_REQUEST, GET_ALL_ISSUES_REQUEST, GET_PULL_COMMENTS_REQUEST} from '../Constant/dashboardConstant';
-import {getAllPullSuccess, getAllPullFailure, getAllIssuesSuccess, getAllIssuesFailure, getPullCommentsSuccess, getPullCommentsFailure} from '../Actions/dashboardAction'
+import {GET_ALL_PULL_REQUEST, GET_ALL_ISSUES_REQUEST, GET_PULL_COMMENTS_REQUEST, SET_SELECTED_REPO_REQUEST} from '../Constant/dashboardConstant';
+import {getAllPullSuccess, getAllPullFailure, getAllIssuesSuccess, getAllIssuesFailure, getPullCommentsSuccess, getPullCommentsFailure, setSelectedRepoSuccess} from '../Actions/dashboardAction'
 import {getAllPullAPI, getAllIssuesAPI, getPullCommentsAPI} from '../API/dashboardAPI';
 
 //API call to get all the Pull Requests
@@ -44,9 +44,19 @@ function* getPullCommentsFn(action) {
         yield put(getPullCommentsFailure(err))
     }
 }
+
+//Sage call to set Repo Name
+function* setRepoNameFn(action) {
+    try{
+        yield put(setSelectedRepoSuccess(action?.payload || []))
+    }catch(err){
+        console.log(err, 'saga err')
+    }
+}
   
 export default function* dashboardSaga() {
     yield takeLatest(GET_ALL_PULL_REQUEST, getAllPullRequestFn);
     yield takeLatest(GET_ALL_ISSUES_REQUEST, getAllIssuesRequestFn);
-    yield takeLatest(GET_PULL_COMMENTS_REQUEST, getPullCommentsFn)
+    yield takeLatest(GET_PULL_COMMENTS_REQUEST, getPullCommentsFn);
+    yield takeLatest(SET_SELECTED_REPO_REQUEST, setRepoNameFn);
 }

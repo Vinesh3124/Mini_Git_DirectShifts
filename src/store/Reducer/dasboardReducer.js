@@ -7,7 +7,9 @@ import {
     GET_ALL_ISSUES_FAILURE,
     GET_PULL_COMMENTS_REQUEST, 
     GET_PULL_COMMENTS_SUCCESS, 
-    GET_PULL_COMMENTS_FAILURE
+    GET_PULL_COMMENTS_FAILURE,
+    SET_SELECTED_REPO_REQUEST, 
+    SET_SELECTED_REPO_SUCCESS
 } from "../Constant/dashboardConstant";
 
 const initialState = {
@@ -18,12 +20,12 @@ const initialState = {
     allIssuesRequest: [],
     maxPullPage: 0,
     maxIssuesPage: 0,
-    pullComments: []
+    pullComments: [],
+    repoName: ''
 };
 
 const getLastPageNum = (paginationHeader, lastPage) => {
 
-    // Split the header string into individual links
     const links = paginationHeader.split(',');
 
     // Find the link with rel="last"
@@ -47,6 +49,16 @@ const getLastPageNum = (paginationHeader, lastPage) => {
 
 const dashboardReducer = (state = initialState, action) => {
     switch (action.type) {
+        case SET_SELECTED_REPO_REQUEST: 
+            return{
+                ...state,
+                repoName: ''
+            }
+        case SET_SELECTED_REPO_SUCCESS:
+            return{
+                ...state,
+                repoName: action.payload
+            }
         case GET_ALL_PULL_REQUEST:
             return {
                 ...state,

@@ -10,12 +10,25 @@
         margin: auto;
     }
 
+    .card-header-container{
+        width: 100%;
+        display: flex;
+    }
+
+    .external-link-icon{
+        svg{
+            width: 15px;
+            height: 15px;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+    }
+
     .card-header,
     .card-info {
         max-width: 95%;
         height: 20px;
-        margin: auto;
-        margin-top: 5px;
+        margin: 5px 10px 0px 10px;
         display: flex;
         align-items: center;
         font-size: 14px;
