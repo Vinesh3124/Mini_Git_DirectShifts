@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FormControl, MenuItem, Select, styled, InputLabel } from '@mui/material';
 
 const StyledSelect = styled(Select)({
@@ -9,11 +9,11 @@ const StyledSelect = styled(Select)({
 });
 
 const CustomInputLabel = styled(InputLabel)({
-    color: 'black',  // Change this to your desired label color
+    color: 'black',
 });
 
 const SelectDropDown = ({ filterOptions, onSelect, label, value }) => {
-    
+
     const handleChange = (event) => {
         onSelect(event.target.value)
     };

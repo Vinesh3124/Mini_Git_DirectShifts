@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -69,6 +68,7 @@ const PullDetailsPage = (props) => {
         } else {
             getIssuesRequestData()
         }
+     // eslint-disable-next-line
     }, [page, showIssuesPage])
 
     const handleFilterApply = () => {
@@ -149,47 +149,49 @@ const PullDetailsPage = (props) => {
     };
 
     const list = () => (
-        <div>
-            <div className="filter-txt-style">Filter</div>
-            <Divider />
-            <Box
-                sx={{ width: 350 }}
-                role="presentation"
-            >
-                <div className="drawer-items">
-                    <SelectDropDown
-                        label='Filter by'
-                        filterOptions={pullStateFilter}
-                        value={selectedState}
-                        onSelect={(val) => {
-                            setSelectedState(val);
-                            setPage(1);
-                        }}
-                    />
-                </div>
+        <div className="side-bar-container">
+            <div>
+                <div className="filter-txt-style">{`${showIssuesPage ? 'Issues' : 'Pull Request'} Filter`}</div>
                 <Divider />
-                {!showIssuesPage ? <>
+                <div>
                     <div className="drawer-items">
                         <SelectDropDown
-                            label='Sort by'
-                            filterOptions={pullSortFilter}
-                            value={selectedSortType}
+                            label='Filter by'
+                            filterOptions={pullStateFilter}
+                            value={selectedState}
                             onSelect={(val) => {
-                                setSelectedSortType(val);
+                                setSelectedState(val);
                                 setPage(1);
                             }}
                         />
                     </div>
                     <Divider />
-                </> : null}
-                {showIssuesPage ? <>
-                    <div className="drawer-items">
-                        <MultiSelectDropDown value={selectedLabels} filterOptions={issuesLabelFilter} onSelect={(val) => setSelectedLabels(val)} />
-                    </div>
-                    <Divider />
-                </> : null}
-                <Button onClick={() => handleFilterApply()}>Apply</Button>
-            </Box>
+                    {!showIssuesPage ? <>
+                        <div className="drawer-items">
+                            <SelectDropDown
+                                label='Sort by'
+                                filterOptions={pullSortFilter}
+                                value={selectedSortType}
+                                onSelect={(val) => {
+                                    setSelectedSortType(val);
+                                    setPage(1);
+                                }}
+                            />
+                        </div>
+                        <Divider />
+                    </> : null}
+                    {showIssuesPage ? <>
+                        <div className="drawer-items">
+                            <MultiSelectDropDown value={selectedLabels} filterOptions={issuesLabelFilter} onSelect={(val) => setSelectedLabels(val)} />
+                        </div>
+                        <Divider />
+                    </> : null}
+                </div>
+            </div>
+            <div className="side-bar-btn-container">
+                <Button sx={{width: 150}} variant="contained" onClick={() => handleFilterApply()}>Apply</Button>
+                <Button sx={{width: 150}} variant='outlined' onClick={toggleDrawer(false)}>Close</Button>
+            </div>
         </div>
     );
 
