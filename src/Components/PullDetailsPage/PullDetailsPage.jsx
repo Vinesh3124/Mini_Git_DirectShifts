@@ -10,7 +10,7 @@ import { getAllPullRequest, getAllIssuesRequest, getPullCommentsRequest } from "
 import InfoCard from "../Common/InfoCard/InfoCard";
 import Loader from "../Common/Loader/Loader";
 import SelectDropDown from "../Common/SelectDropDown/SelectDropDown";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import MultiSelectDropDown from "../Common/MulitSelectDropDown/MultiSelectDropdown";
 import CustomModal from "../Common/Modal/Modal";
 import { FormatTimeDateFn } from "../../store/Constant/dashboardConstant";
@@ -28,6 +28,7 @@ const PullDetailsPage = (props) => {
     const [openViewModal, setOpenViewModal] = useState(false)
     const [selectedCardData, setSelectedCardData] = useState({})
     const location = useLocation();
+    const history = useHistory()
 
     useEffect(() => {
         if (location?.pathname === '/list-pull-request') {
@@ -36,6 +37,13 @@ const PullDetailsPage = (props) => {
             setShowIssuesPage(true)
         }
     }, [location])
+
+    useEffect(() => {
+        if(!repoNameData?.length){
+            history.push('/')
+        }
+     // eslint-disable-next-line
+    }, [repoNameData])
 
     const getPullRequestData = () => {
         let pullPayload = {
